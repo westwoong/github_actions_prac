@@ -41,7 +41,9 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
-          script: whoami
+          script: |
+            whoami
+            ls -al
 #          script: |
 #            docker stop $REPOSITORY || true
 #            docker rm $REPOSITORY || true
