@@ -35,14 +35,13 @@ jobs:
 #          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
       - name: Deploy to EC2
-        uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
-          script: |
-            whoami
+          script: whoami
 #          script: |
 #            docker stop $REPOSITORY || true
 #            docker rm $REPOSITORY || true
