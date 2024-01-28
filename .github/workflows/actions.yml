@@ -35,6 +35,10 @@ jobs:
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
       - name: Deploy to EC2
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REPOSITORY: practice-ecr
+          IMAGE_TAG: latest
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
