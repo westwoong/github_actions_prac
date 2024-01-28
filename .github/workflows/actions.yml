@@ -45,6 +45,6 @@ jobs:
             docker pull $REGISTRY/$REPOSITORY:$IMAGE_TAG || true
             docker stop $(docker ps -a)
             docker rm $(docker ps -a)
-            docker run -d --name $REPOSITORY -p 80:3000 $REGISTRY/$REPOSITORY:$IMAGE_TAG
+            docker run -d --name practice-ecr -p 80:3000 ${{ steps.login-ecr.outputs.registry }}/practice-ecr:latest
             echo "deploy complete!"
 
