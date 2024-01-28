@@ -35,10 +35,6 @@ jobs:
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
       - name: Deploy to EC2
-        env:
-          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: practice-ecr
-          IMAGE_TAG: latest
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
@@ -46,8 +42,9 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            docker stop $REPOSITORY || true
-            docker rm $REPOSITORY || true
-            docker pull $REGISTRY/$REPOSITORY:$IMAGE_TAG
+            docker pull $REGISTRY/$REPOSITORY:$IMAGE_TAG || true
+            docker stop $(docker ps -a)
+            docker rm $(docker ps -a)
             docker run -d --name $REPOSITORY -p 80:3000 $REGISTRY/$REPOSITORY:$IMAGE_TAG
+            echo "deploy complete!"
 
